@@ -248,6 +248,7 @@ async function consturctServer(moduleDefs) {
               const { url } = await match(req.query.id, source)
               song.url = url
               song.freeTrialInfo = null // 对于Splayer来说，去除开通会员提示
+              status.playUseOtherSource = true
             }
         }
 
