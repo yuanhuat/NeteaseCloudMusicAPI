@@ -27,11 +27,11 @@ jobs:
         run: |
           # 定义镜像标签：Docker Hub 格式为「用户名/仓库名:版本」
           # 示例：username123/my-node-app:20240909-123456（时间戳避免标签重复）
-          IMAGE_TAG="${{ secrets.DOCKER_HUB_USERNAME }}/my-image-name:$(date +%Y%m%d-%H%M%S)"
+          IMAGE_TAG="${{ secrets.DOCKER_HUB_USERNAME }}/cloudmusic:$(date +%Y%m%d-%H%M%S)"
           # 构建镜像（--file 指定 Dockerfile 路径，默认当前目录）
           docker build . --file Dockerfile --tag $IMAGE_TAG
           # 额外添加 latest 标签（标记为最新版本，可选）
-          docker tag $IMAGE_TAG "${{ secrets.DOCKER_HUB_USERNAME }}/my-image-name:latest"
+          docker tag $IMAGE_TAG "${{ secrets.DOCKER_HUB_USERNAME }}/cloudmusic:latest"
           # 保存标签到环境变量，供后续推送使用
           echo "IMAGE_TAG=$IMAGE_TAG" >> $GITHUB_ENV
 
@@ -41,4 +41,4 @@ jobs:
         run: |
           # 推送带时间戳的标签和 latest 标签
           docker push ${{ env.IMAGE_TAG }}
-          docker push "${{ secrets.DOCKER_HUB_USERNAME }}/my-image-name:latest"
+          docker push "${{ secrets.DOCKER_HUB_USERNAME }}/cloudmusic:latest"
